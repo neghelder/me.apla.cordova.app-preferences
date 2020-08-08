@@ -5,14 +5,13 @@ module.exports = function (context) {
 		path = require('path'),
 		fs = require("./lib/filesystem")(Q, require('fs'), path),
 		settings = require("./lib/settings")(fs, path),
-		android = require("./lib/android")(context),
-		ios = require("./lib/ios")(Q, fs, path, require('plist'), require('xcode'));
+		pu = require('./lib/platform-util')(context),
+		android = pu.forPlatform('android', () => require("./lib/android")(context));
 
 	return settings.get()
 		.then(function (config) {
 			return Q.all([
-				android.afterPluginInstall(config),
-				// ios.afterPluginInstall(config) // not implemented for iOS
+				android && android.afterPluginInstall && android.afterPluginInstall(config)
 			]);
 		})
 		.catch(function(err) {

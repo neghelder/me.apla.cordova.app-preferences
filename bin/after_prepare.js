@@ -5,10 +5,11 @@ module.exports = function (context) {
 		path = require('path'),
 		fs = require("./lib/filesystem")(Q, require('fs'), path),
 		settings = require("./lib/settings")(fs, path),
+		pu = require('./lib/platform-util')(context),
 		platforms = {};
 
-	platforms.android = require("./lib/android")(context);
-	platforms.ios = require("./lib/ios")(Q, fs, path, require('plist'), require('xcode'));
+	platforms.android = pu.forPlatform('android', () => require("./lib/android")(context));
+	platforms.ios = pu.forPlatform('ios', () => require("./lib/ios")(Q, fs, path, require('plist'), require('xcode')));
 
 	return settings.get()
 		.then(function (config) {
