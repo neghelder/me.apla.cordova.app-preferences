@@ -153,6 +153,7 @@ module.exports = function (context) {
 
 		return fs.exists('platforms/android')
 			// Write preferences xml file
+			.then(function () { return fs.mkdir('platforms/android/res'); })
 			.then(function () { return fs.mkdir('platforms/android/res/xml'); })
 			.then(function () { return fs.writeFile('platforms/android/res/xml/apppreferences.xml', preferencesDocument.write()); })
 
@@ -190,7 +191,7 @@ module.exports = function (context) {
 			})
 			.then(function (data) {
 				var androidPackagePath = "me.apla.cordova".replace (/\./g, '/');
-				var activityFileName= path.join ('platforms/android/src', androidPackagePath, 'AppPreferencesActivity.java');
+				var activityFileName= path.join ('platforms/android/app/src/main/java', androidPackagePath, 'AppPreferencesActivity.java');
 
 				return fs.writeFile(activityFileName, data);
 			})
@@ -209,7 +210,7 @@ module.exports = function (context) {
 	function clean(config) {
 
 		var androidPackagePath = "me.apla.cordova".replace (/\./g, '/');
-		var activityFileName = path.join ('platforms/android/src', androidPackagePath, 'AppPreferencesActivity.java');
+		var activityFileName = path.join ('platforms/android/app/src/main/java', androidPackagePath, 'AppPreferencesActivity.java');
 
 		return fs.exists('platforms/android')
 			// Remove preferences xml file
