@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-app-preferences",
-  "version": "0.99.3",
+  "version": "0.99.4",
   "description": "Application preferences plugin and preference pane generator",
   "cordova": {
     "id": "cordova-plugin-app-preferences",
@@ -23,7 +23,7 @@
     "cordova-app-preferences-generator": "bin/build-app-settings.js"
   },
   "dependencies": {
-    "cordova-lib": "^9.0.0"
+    "cordova-lib": "^12.0.0"
   },
   "devDependencies": {
     "cordova": ">=5.4.1",
